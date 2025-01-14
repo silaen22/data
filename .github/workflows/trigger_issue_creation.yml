@@ -1,0 +1,19 @@
+name: Trigger Issue Creation
+
+on:
+  push:
+    branches:
+      - main # main 브랜치에 푸시할 때 자동으로 실행
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Issue Creation in Record Repo
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/YOUR_USERNAME/YOUR_RECORD_REPO/dispatches \
+            -d '{"event_type": "create_issue", "client_payload": { "data": "게임 결과 데이터" }}'
